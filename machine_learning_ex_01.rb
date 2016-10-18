@@ -1,6 +1,7 @@
 require 'daru'
 require 'nmatrix'
 require 'nyaplot'
+require 'nyaplot3d'
 require 'pp'
 require 'gsl'
 
@@ -99,14 +100,12 @@ for i in 0..(theta0_vals.length-1) do
   end
 end
 
-x, y_nmatrix = np.meshgrid(theta0_vals,theta1_vals)
-
-fig = plt.figure(3)
-ax = fig.gca(projection='3d')
-plt.savefig('courseraEx01_fig03.png')
+x, y = NMatrix.meshgrid([theta0_vals.to_a, theta1_vals.to_a])
 
 # 3-D surface
-surf = ax.plot_surface(x, Y, j_vals, rstride=1, cstride=1, cmap=cm.coolwarm, linewidth=0, antialiased=False)
+plt = Nyaplot::Plot3D.new
+plt.add(:surface, x.to_a, y.to_a, j_vals.to_a)
+plt.show
 
 # contour
 plt = Nyaplot::Plot.new
